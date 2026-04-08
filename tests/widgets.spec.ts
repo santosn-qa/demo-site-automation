@@ -10,9 +10,11 @@ test.describe('Select Menu Widget', () => {
     await widgetsPage.navigate('/select-menu');
 
     // Act
-    await widgetsPage.selectStandardDropdown(testData.widgets.standardDropdown);
-    await widgetsPage.selectCustomDropdown(testData.widgets.customDropdown);
-    await widgetsPage.selectMultiValues(testData.widgets.multiValues);
+    await widgetsPage.configureSelectMenu({
+      standard: testData.widgets.standardDropdown,
+      custom: testData.widgets.customDropdown,
+      multi: testData.widgets.multiValues
+    });
 
     const standardValue = await widgetsPage.getStandardDropdownValue();
     const customValue = await widgetsPage.getCustomDropdownValue();

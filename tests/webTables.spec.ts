@@ -11,9 +11,7 @@ test.describe('Web Tables', () => {
     await webTablesPage.navigate('/webtables');
 
     // Act
-    await webTablesPage.editRow(editRecord.rowIndex, editRecord.data);
-    await webTablesPage.submitForm();
-    const updatedRow = await webTablesPage.getRowData(editRecord.rowIndex);
+    const updatedRow = await webTablesPage.updateRecord(editRecord.rowIndex, editRecord.data);
 
     // Assert
     expect(updatedRow).toEqual(editRecord.data);

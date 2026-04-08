@@ -13,9 +13,7 @@ test.describe('Student Registration Form', () => {
       await formsPage.navigate('/automation-practice-form');
 
       // Act
-      await formsPage.fillStudentForm(data);
-      await formsPage.submitForm();
-      const confirmationData = await formsPage.getConfirmationData();
+      const confirmationData = await formsPage.submitStudentForm(data);
 
       // Assert
       expect(confirmationData['Student Name']).toBe(`${data.firstName} ${data.lastName}`);

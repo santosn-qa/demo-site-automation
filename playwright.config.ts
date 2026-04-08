@@ -6,7 +6,8 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  // In CI we want readable console output plus a deterministic HTML report artifact.
+  reporter: [['list'], ['html', { open: 'never' }]],
   use: {
     baseURL: 'https://demoqa.com',
     trace: 'on-first-retry',

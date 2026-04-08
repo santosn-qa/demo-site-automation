@@ -71,12 +71,6 @@ Container/headless-host headed run (no native display server):
 npm run test:headed
 ```
 
-Local desktop headed run (with display server):
-
-```bash
-npm run test:headed:local
-```
-
 Notes:
 - Browser binaries are installed automatically during npm install through the postinstall script.
 - On Linux containers/VMs, `npm run install:deps` may require `sudo` (it installs system packages Playwright needs, e.g. GTK/ATK libs).

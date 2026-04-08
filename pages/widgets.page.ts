@@ -14,14 +14,14 @@ export class WidgetsPage extends BasePage {
     // Old Style Select Menu (native <select>)
     this.standardDropdown = this.page.locator('#oldSelectMenu');
 
-    // Select One (react-select, titles like "Mr.", "Mrs."...)
+    // Select One (react-select)
     this.customContainer = this.page.locator('#selectOne');
     this.customInput = this.page.locator('#react-select-3-input');
     this.customValueContainer = this.page.locator('#selectOne');
 
-    const multiSelectSection = this.page.locator('p:has-text("Multiselect drop down")').locator('..');
-    this.multiSelectInput = multiSelectSection.locator('input[role="combobox"]');
-    this.multiValueContainer = multiSelectSection;
+    const multiSelectRow = this.page.getByText('Multiselect drop down').locator('..').locator('..');
+    this.multiSelectInput = multiSelectRow.locator('input[role="combobox"]');
+    this.multiValueContainer = multiSelectRow;
   }
 
   async selectStandardDropdown(value: string): Promise<void> {
@@ -40,6 +40,16 @@ export class WidgetsPage extends BasePage {
       await this.fill(this.multiSelectInput, value);
       await this.multiSelectInput.press('Enter');
     }
+  }
+
+  async configureSelectMenu(options: {
+    standard: string;
+    custom: string;
+    multi: string[];
+  }): Promise<void> {
+    await this.selectStandardDropdown(options.standard);
+    await this.selectCustomDropdown(options.custom);
+    await this.selectMultiValues(options.multi);
   }
 
   async getStandardDropdownValue(): Promise<string> {

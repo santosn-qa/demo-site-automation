@@ -22,17 +22,16 @@ export class WebTablesPage extends BasePage {
 
   constructor(page: Page) {
     super(page);
-    // DemoQA WebTables is currently rendered as a real table (thead/tbody).
-    // First rowgroup is the header, second rowgroup contains the data rows.
+    // First rowgroup is header; second rowgroup contains data rows.
     this.tableRows = this.page.getByRole('rowgroup').nth(1).getByRole('row');
 
-    // Registration form modal inputs
-    this.firstNameInput = this.page.locator('#firstName');
-    this.lastNameInput = this.page.locator('#lastName');
-    this.emailInput = this.page.locator('#userEmail');
-    this.ageInput = this.page.locator('#age');
-    this.salaryInput = this.page.locator('#salary');
-    this.departmentInput = this.page.locator('#department');
+    // Registration form modal inputs (placeholders are more reliable than labels on DemoQA)
+    this.firstNameInput = this.page.getByPlaceholder('First Name');
+    this.lastNameInput = this.page.getByPlaceholder('Last Name');
+    this.emailInput = this.page.getByPlaceholder('name@example.com');
+    this.ageInput = this.page.getByPlaceholder('Age');
+    this.salaryInput = this.page.getByPlaceholder('Salary');
+    this.departmentInput = this.page.getByPlaceholder('Department');
     this.submitButton = this.page.getByRole('button', { name: 'Submit' });
   }
 
@@ -51,6 +50,12 @@ export class WebTablesPage extends BasePage {
     await this.fill(this.ageInput, data.age);
     await this.fill(this.salaryInput, data.salary);
     await this.fill(this.departmentInput, data.department);
+  }
+
+  async updateRecord(index: number, data: WebTableRecord): Promise<WebTableRecord> {
+    await this.editRow(index, data);
+    await this.submitForm();
+    return this.getRowData(index);
   }
 
   async submitForm(): Promise<void> {
