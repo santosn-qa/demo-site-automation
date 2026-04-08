@@ -15,6 +15,16 @@ export type StudentFormData = {
   city: string;
 };
 
+/**
+ * Page object for DemoQA's "Student Registration Form".
+ *
+ * Approach:
+ * - Use stable locators (placeholder/id/role) because DemoQA is inconsistent
+ *   about <label for="..."> associations.
+ * - Avoid hard waits: rely on Playwright auto-wait plus explicit "visible" waits
+ *   where we must synchronize (e.g., confirmation modal table rows).
+ * - Prefer deterministic selection flows for custom controls (react-select).
+ */
 export class FormsPage extends BasePage {
   private readonly firstNameInput: Locator;
   private readonly lastNameInput: Locator;
@@ -57,7 +67,8 @@ export class FormsPage extends BasePage {
     await this.page.getByLabel(data.gender, { exact: true }).check();
     await this.fill(this.mobileInput, data.mobile);
 
-    // Avoid Enter while editing DOB; it can submit the form and open the modal mid-fill.
+    // DemoQA's date picker input can treat Enter as a form submit in some cases.
+    // We type the date, then Tab out to commit the value without triggering submit.
     await this.click(this.dateOfBirthInput);
     await this.fill(this.dateOfBirthInput, data.dateOfBirth);
     await this.dateOfBirthInput.press('Tab');
@@ -74,7 +85,8 @@ export class FormsPage extends BasePage {
 
     await this.fill(this.currentAddressInput, data.address);
 
-    // DemoQA uses react-select here; typing then choosing an option is the most stable.
+    // DemoQA uses react-select for State/City.
+    // The most reliable path is: focus container -> type -> click the matching option.
     await this.click(this.stateContainer);
     await this.fill(this.stateInput, data.state);
     await this.page.getByRole('option', { name: data.state, exact: true }).click();
@@ -99,6 +111,8 @@ export class FormsPage extends BasePage {
   }
 
   async getConfirmationData(): Promise<Record<string, string>> {
+    // The confirmation UI is a simple table in a dialog. Converting it into a
+    // key/value map keeps tests readable and decoupled from table row ordering.
     await this.waitForElement(this.confirmationRows.first());
 
     const entries = await this.confirmationRows.evaluateAll((rows: Element[]) => {

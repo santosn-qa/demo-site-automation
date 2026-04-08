@@ -61,7 +61,6 @@ https://demoqa.com
 
 ```bash
 npm install
-npm run install:deps
 npx playwright test
 ```
 

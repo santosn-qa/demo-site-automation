@@ -10,6 +10,15 @@ export type WebTableRecord = {
   department: string;
 };
 
+/**
+ * Page object for DemoQA's Web Tables.
+ *
+ * Approach:
+ * - Locate table rows via ARIA roles instead of CSS selectors; DemoQA's DOM is
+ *   fairly stable in terms of roles even when markup shifts.
+ * - Isolate row editing + row reading so tests can express intent as
+ *   "update record" and assert on the returned data.
+ */
 export class WebTablesPage extends BasePage {
   private readonly tableRows: Locator;
   private readonly firstNameInput: Locator;
@@ -66,6 +75,9 @@ export class WebTablesPage extends BasePage {
     const row = this.getRowByIndex(index);
     await this.waitForElement(row);
     const cells = await row.getByRole('cell').allTextContents();
+
+    // DemoQA cell order (as displayed): First Name, Last Name, Age, Email, Salary, Department
+    // We normalize by trimming so asserts aren't sensitive to whitespace.
 
     return {
       firstName: cells[0]?.trim() ?? '',
