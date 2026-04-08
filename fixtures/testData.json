@@ -1,0 +1,48 @@
+{
+  "webTables": {
+    "editRecord": {
+      "rowIndex": 0,
+      "data": {
+        "firstName": "Miguel",
+        "lastName": "Santos",
+        "email": "miguel.santos@mailinator.com",
+        "age": "31",
+        "salary": "85000",
+        "department": "Engineering"
+      }
+    }
+  },
+  "forms": [
+    {
+      "firstName": "Maria",
+      "lastName": "Reyes",
+      "email": "maria.reyes@mailinator.com",
+      "gender": "Female",
+      "mobile": "9171234567",
+      "dateOfBirth": "15 May 1994",
+      "subjects": ["Maths", "English"],
+      "hobbies": ["Reading", "Music"],
+      "address": "123 Ayala Ave, Makati City",
+      "state": "NCR",
+      "city": "Delhi"
+    },
+    {
+      "firstName": "Juan",
+      "lastName": "Dela Cruz",
+      "email": "juan.delacruz@mailinator.com",
+      "gender": "Male",
+      "mobile": "9981234567",
+      "dateOfBirth": "03 Nov 1992",
+      "subjects": ["Computer Science"],
+      "hobbies": ["Sports"],
+      "address": "45 Rizal St, Quezon City",
+      "state": "Uttar Pradesh",
+      "city": "Agra"
+    }
+  ],
+  "widgets": {
+    "standardDropdown": "Purple",
+    "customDropdown": "Mrs.",
+    "multiValues": ["Green", "Blue", "Black"]
+  }
+}

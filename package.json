@@ -1,0 +1,17 @@
+{
+  "name": "demo-site-automation",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "playwright install chromium",
+    "install:deps": "playwright install-deps chromium",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed --workers=1",
+    "test:ui": "playwright test --ui"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.2",
+    "@types/node": "^24.6.0",
+    "typescript": "^5.9.2"
+  }
+}
